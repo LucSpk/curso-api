@@ -1,4 +1,4 @@
-package br.com.lucas.api.service;
+package br.com.lucas.api.services.users;
 
 import br.com.lucas.api.domain.User;
 

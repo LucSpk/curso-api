@@ -1,7 +1,7 @@
 package br.com.lucas.api.resources;
 
 import br.com.lucas.api.domain.User;
-import br.com.lucas.api.service.UserService;
+import br.com.lucas.api.services.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
