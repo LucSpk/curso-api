@@ -44,4 +44,10 @@ public class UserResource {
                 ).toUri()                                                                       // Pega a URI desse usuário
         ).build();                                                                              // Bilda tudo para retornar ao cliente (status 201 e URI)
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        userDTO.setId(id);
+        return ResponseEntity.ok().body(modelMapper.map(userService.update(userDTO), UserDTO.class));
+    }
 }

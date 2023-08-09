@@ -34,13 +34,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(UserDTO userDTO) {
-        this.verificaEmailExistente(userDTO);
+        this.findByEmail(userDTO);
         return userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
-    public void verificaEmailExistente(UserDTO userDTO) {
+    @Override
+    public User update(UserDTO userDTO) {
+        this.findByEmail(userDTO);
+        return userRepository.save(modelMapper.map(userDTO, User.class));
+    }
+
+    public void findByEmail(UserDTO userDTO) {
         Optional<User> user = userRepository.findByEmail(userDTO.getEmail());
-        if(user.isPresent()) {
+        if(user.isPresent() && !user.get().getId().equals(userDTO.getId())) {
             throw new DataIntegratyViolationException("E-mail já cadastrado no sistema");
         }
     }
