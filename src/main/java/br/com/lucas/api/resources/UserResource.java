@@ -17,12 +17,13 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/user")
 public class UserResource {
 
+    public static final String ID = "/{id}";
     @Autowired
     private UserService userService;
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id){
         return ResponseEntity.ok().body(
                 modelMapper.map(userService.findById(id), UserDTO.class)
@@ -39,15 +40,21 @@ public class UserResource {
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
         return ResponseEntity.created(                                                          // Retorna um Status 201
-                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(  // Busca da URI do Usuário que ta sendo criado
+                ServletUriComponentsBuilder.fromCurrentRequest().path(ID).buildAndExpand(  // Busca da URI do Usuário que ta sendo criado
                         userService.create(userDTO).getId()                                     // Cria o Usuário
                 ).toUri()                                                                       // Pega a URI desse usuário
         ).build();                                                                              // Bilda tudo para retornar ao cliente (status 201 e URI)
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = ID)
     public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
         userDTO.setId(id);
         return ResponseEntity.ok().body(modelMapper.map(userService.update(userDTO), UserDTO.class));
+    }
+
+    @DeleteMapping(value = ID)
+    public ResponseEntity<UserDTO> delete(@PathVariable Integer id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
