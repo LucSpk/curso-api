@@ -18,10 +18,10 @@ public class LocalConfig {
 
     @Bean
     public void starDB() {
-        User user01 = new User(null, "Lucas", "lucas@email.com", "123456");
-        User user02 = new User(null, "Thiago", "Thiago@email.com", "123456");
+        //User user01 = new User(null, "Lucas", "lucas@email.com", "123456");
+        //User user02 = new User(null, "Thiago", "Thiago@email.com", "123456");
 
-        userRepository.saveAll(List.of(user01, user02));
+        //userRepository.saveAll(List.of(user01, user02));
 
     }
 }
