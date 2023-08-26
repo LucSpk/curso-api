@@ -3,6 +3,7 @@ package br.com.lucas.api.services.users.impl;
 import br.com.lucas.api.domain.User;
 import br.com.lucas.api.domain.dto.UserDTO;
 import br.com.lucas.api.repositories.UserRepository;
+import br.com.lucas.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,18 @@ class UserServiceImplTest {
         Assertions.assertEquals(NAME, response.getName());
         Assertions.assertEquals(EMAIL, response.getEmail());
         Assertions.assertEquals(PASSWORD, response.getPassword());
+    }
+
+    @Test
+    void whenFindByIdThenReturnAnObjectNotFoundException() {
+        Mockito.when(userRepository.findById(Mockito.anyInt())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
+
+        try {
+            userServiceImp.findById(ID);
+        } catch (Exception ex) {
+            Assertions.assertEquals(ObjectNotFoundException.class, ex.getClass());
+            Assertions.assertEquals("Objeto não encontrado", ex.getMessage());
+        }
     }
 
     @Test
