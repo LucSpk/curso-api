@@ -162,10 +162,6 @@ class UserServiceImplTest {
         }
     }
 
-    @Test
-    void findByEmail() {
-    }
-
     private void start() {
         this.user = new User(ID, NAME, EMAIL, PASSWORD);
         this.userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
