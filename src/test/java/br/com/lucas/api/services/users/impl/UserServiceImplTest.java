@@ -87,7 +87,18 @@ class UserServiceImplTest {
     }
 
     @Test
-    void create() {
+    void whenCreateThenReturnSucess() {
+        Mockito.when(userRepository.save(Mockito.any())).thenReturn(user);
+
+        User response = userServiceImp.create(userDTO);
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(User.class, response.getClass());
+
+        Assertions.assertEquals(ID, response.getId());
+        Assertions.assertEquals(NAME, response.getName());
+        Assertions.assertEquals(EMAIL, response.getEmail());
+        Assertions.assertEquals(PASSWORD, response.getPassword());
+
     }
 
     @Test
