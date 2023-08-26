@@ -100,7 +100,6 @@ class UserServiceImplTest {
         Assertions.assertEquals(NAME, response.getName());
         Assertions.assertEquals(EMAIL, response.getEmail());
         Assertions.assertEquals(PASSWORD, response.getPassword());
-
     }
 
     @Test
@@ -114,7 +113,6 @@ class UserServiceImplTest {
             Assertions.assertEquals(DataIntegratyViolationException.class, ex.getClass());
             Assertions.assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
-
     }
 
     @Test
@@ -142,11 +140,16 @@ class UserServiceImplTest {
             Assertions.assertEquals(DataIntegratyViolationException.class, ex.getClass());
             Assertions.assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
-
     }
 
     @Test
-    void delete() {
+    void whenDeleteWithSucess() {
+        Mockito.when(userRepository.findById(Mockito.anyInt())).thenReturn(optionalUser);
+        Mockito.doNothing().when(userRepository).deleteById(Mockito.anyInt());
+
+        userServiceImp.delete(ID);
+        Mockito.verify(userRepository, Mockito.times(1)).deleteById(Mockito.anyInt());
+
     }
 
     @Test
